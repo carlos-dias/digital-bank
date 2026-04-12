@@ -1,5 +1,12 @@
 CREATE TABLE account
 (
     id      BIGINT PRIMARY KEY,
-    balance NUMERIC(19, 2) NOT NULL
+    balance BIGINT       NOT NULL,
+    name    VARCHAR(255) NOT NULL
 );
+
+CREATE SEQUENCE account_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE CACHE 1;
