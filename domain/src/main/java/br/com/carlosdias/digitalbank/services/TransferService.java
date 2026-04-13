@@ -6,6 +6,8 @@ import br.com.carlosdias.digitalbank.enums.TransactionType;
 import br.com.carlosdias.digitalbank.exceptions.AccountNotFoundException;
 import br.com.carlosdias.digitalbank.exceptions.InsufficientBalanceOrAccountNotFoundException;
 import br.com.carlosdias.digitalbank.exceptions.TransferToSameAccountException;
+import br.com.carlosdias.digitalbank.producers.TransferProducer;
+import br.com.carlosdias.digitalbank.producers.events.TransferEvent;
 import br.com.carlosdias.digitalbank.repositories.AccountRepository;
 import br.com.carlosdias.digitalbank.repositories.TransactionRepository;
 import jakarta.transaction.Transactional;
@@ -21,6 +23,7 @@ import java.util.UUID;
 public class TransferService {
     private final AccountRepository accountRepository;
     private final TransactionRepository transactionRepository;
+    private final TransferProducer transferProducer;
 
     @Transactional
     public void transfer(TransferCommand command) {
@@ -49,6 +52,8 @@ public class TransferService {
 
             transactionRepository.save(debit);
             transactionRepository.save(credit);
+
+            transferProducer.send(new TransferEvent(referenceId, command.fromAccountId(), command.toAccountId(), command.amount()));
 
             log.info("m=transfer, result=true");
         } catch (Exception e) {
