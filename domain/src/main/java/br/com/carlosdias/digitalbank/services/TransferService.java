@@ -47,7 +47,6 @@ public class TransferService {
             UUID referenceId = UUID.randomUUID();
 
             TransactionEntity debit = createTransaction(command.fromAccountId(), command.amount(), TransactionType.DEBIT, referenceId);
-
             TransactionEntity credit = createTransaction(command.toAccountId(), command.amount(), TransactionType.CREDIT, referenceId);
 
             transactionRepository.save(debit);
