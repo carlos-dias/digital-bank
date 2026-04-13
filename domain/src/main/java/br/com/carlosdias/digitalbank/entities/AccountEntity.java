@@ -3,7 +3,8 @@ package br.com.carlosdias.digitalbank.entities;
 import jakarta.persistence.*;
 import lombok.Data;
 
-@Entity(name = "account")
+@Entity
+@Table(name = "account")
 @Data
 public class AccountEntity {
 
