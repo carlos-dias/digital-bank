@@ -1,0 +1,5 @@
+server:
+  servlet:
+    context-path: /digital-bank
+
+management.endpoints.web.exposure.include: health,info
