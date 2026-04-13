@@ -7,6 +7,7 @@ import br.com.carlosdias.digitalbank.repositories.AccountRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import java.util.List;
 
@@ -29,7 +30,7 @@ public class AccountService {
     }
 
     private void validateCreateAccount(AccountEntity accountEntity) {
-        if (accountEntity.getName() == null) {
+        if (ObjectUtils.isEmpty(accountEntity.getName())) {
             throw new AccountNameCannotBeEmptyException();
         }
         if (accountEntity.getBalance() == null || accountEntity.getBalance() < 0) {
